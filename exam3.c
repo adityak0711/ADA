@@ -35,7 +35,7 @@ int main()
       mid = (first + last)/2;
    }
    if (first > last)
-      printf("Not found!");
+      printf("-1");
 
    return 0;
 }
