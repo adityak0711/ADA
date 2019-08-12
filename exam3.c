@@ -1,40 +1,41 @@
-#include<stdio.h>
+#include <stdio.h>
 
-void main()
+int main()
 {
- int n;
- scanf("%d",&n);
- int a[n];
- for(int i=0;i<n;i++)
- {
-  scanf("%d",&a[i]);
- }
+   int c, first, last, mid, n, s, a[100];
+   srand(time(NULL));
 
- int x,c,mid;
- printf("enter element");
- scanf("%d",&x);
- int l=0, h=n-1;
+   printf("Enter no of elements\n");
 
- while(l<=h)
- {
-  mid=(l+h)/2;
-  if(x==a[mid])
-  {
-   c=mid;
-   printf("%d",c);
-   break;
-  }
-  else 
-    if(x<a[mid])
-     {
-     h=mid-1; 
-     }
-   else
-    {
-      l=mid+1;
-     }
- }
+   scanf("%d",&n);
 
-printf("%d",-1);
+   for (c = 0; c < n; c++)
+      a[c]=(rand()%100)+1;
 
+   for(int j=0;j<n;j++)
+      printf("%d\n",a[j]);
+
+   printf("Enter element\n");
+   scanf("%d", &s);
+
+   first = 0;
+   last = n - 1;
+   mid = (first+last)/2;
+
+   while (first <= last) {
+      if (a[mid] < s)
+         first = mid + 1;
+      else if (a[mid] == s) {
+         printf("Position %d", mid+1);
+         break;
+      }
+      else
+         last = mid - 1;
+
+      mid = (first + last)/2;
+   }
+   if (first > last)
+      printf("Not found!");
+
+   return 0;
 }
