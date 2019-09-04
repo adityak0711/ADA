@@ -1,77 +1,71 @@
 #include<iostream>
 using namespace std;
 
-void combine(int a[], int l, int mid, int h)
+void merge(int B[],int B_size,int C[],int C_size,int A[])
 {
-	int i=l, j=mid+1, k=l;
-	int c[100];
-
-	while(i<=mid && j<=h) {
-		if (a[i]<a[j]){
-			c[k]=a[i]; 
-			k=k+1;
-			i=i+1;
-		}
-
-		else{
-			c[k]=a[j] ;
-			k=k+1 ;
-			j=j+1;
-		}	
-	}
-
-	if (i>mid){
-		while (j<=h)
-		{ 
-			c[k]=a[j]; 
-			k=k+1; 
-			j=j+1; 
-		}
+	int i=0,j=0,k=0;
+	while(i<B_size && j<C_size)
+	{
+		if(B[i]<C[j])
+			A[k++]=B[i++];
+		else
+			A[k++]=C[j++];
 	}
 	
-	if (j>h){
-		while (i<=mid) 
-		{
-			c[k]=a[i]; 
-			k=k+1; 
-			i=i+1; 
-		}
+	if(i==B_size)
+	{
+		while(j!=C_size)
+			A[k++]=C[j++];
 	}
-
-	for (int z=l;z<h;z++)
-	{ 
-		a[z]=c[z]; 
+	
+	else if(j==C_size)
+	{
+		while(i!=B_size)
+			A[k++]=B[i++];
 	}
+	
 }
 
-
-void mergesort(int a[], int l, int h)
+void mergesort(int A[],int n)
 {
-	if(l<h){
-		int mid=(l+h)/2;
-		mergesort(a,l,mid);
-		mergesort(a,mid+1,h);
-		combine(a,l,mid,h);
+	int B[n];
+	int C[n];
+	int B_size=0,C_size=0;
+	int index=0;
+	for(int i=0;i<(n/2);i++)
+		{
+			B[index++]=A[i];
+			B_size++;
+		}
+	index=0;
+	for(int i=(n/2);i<n;i++)
+	{
+		C[index++]=A[i];
+		C_size++;
 	}
+	/*cout<<"B : "<<B_size<<endl;
+	cout<<"C : "<<C_size<<endl;*/
+	if(B_size>1)
+		mergesort(B,B_size);
+	if(C_size>1)
+		mergesort(C,C_size);
+	merge(B,B_size,C,C_size,A);
 }
 
 int main()
 {
 	int n;
-	cout<<"enter no:";
+	cout<<"Enter the size of array : ";
 	cin>>n;
-
 	int arr[n];
-	cout<<"enter the elemets:";
-
-	for(int i=0;i<n;i++){
+	
+	for(int i=0;i<n;i++)
 		cin>>arr[i];
-	}
-
-	mergesort(arr,0,n-1);
-
-	cout<<"sorted elements are:";
-	for(int i=0;i<n;i++){
-		cout<<arr[i]<<endl;
-	}
+		
+	mergesort(arr,n);
+	
+	cout<<"Sorted : ";
+	for(int i=0;i<n;i++)
+		cout<<arr[i]<<" ";
+	cout<<endl; 
 }
